@@ -1,0 +1,7 @@
+{
+  "name": "stocksuperior",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
