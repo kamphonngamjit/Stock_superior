@@ -1,0 +1,282 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-title>ใบรับสินค้าเข้าระบบ</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="container-fluid">
+    <div class="row" style="padding: 5px;">
+      <div class="col-md-12 col-12" style="padding:0px;">
+        <div class="portlet box blue">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-file-text-o"></i>RS 0002/19</div>
+            <div class="tools">
+              <span class="label label-sm label-success circle" (click)="Save()">บันทึก</span>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="tab-content">
+              <div class="tab-pane active">
+                <div class="row">
+                  <div class="col-4">
+                    <ion-list>
+                      <ion-item no-line>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">เลขที่ใบรับสินค้า</ion-label>
+                        <ion-label></ion-label>
+                        <ion-label *ngIf="type == 'edit'; else edit" #edit>{{item.OrderNo}}</ion-label>
+                        <ion-label *ngIf="type == 'new'; else new" #new>RS {{OrderNo}}</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">วันที่</ion-label>
+                        <ion-datetime displayFormat="D/M/YYYY" pickerFormat="D/M/YYYY" [(ngModel)]="myDate">
+                        </ion-datetime>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">ประเภทการรับ</ion-label>
+                        <ion-select *ngIf="type == 'edit'; else edit" #edit class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'type')" [(ngModel)]="item.DocumentTypeID">
+                          <ion-select-option *ngFor="let type of typeincome" [value]="type.SystemID">
+                            {{ type.SystemName1 }}</ion-select-option>
+                        </ion-select>
+                        <ion-select *ngIf="type == 'new'; else new" #new class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'type')">
+                          <ion-select-option *ngFor="let type of typeincome" [value]="type.SystemID">
+                            {{ type.SystemName1 }}</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">ลูกค้า</ion-label>
+                        <ion-select *ngIf="type == 'edit'; else edit" #edit class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'customer')" [(ngModel)]="item.CustomerID">
+                          <ion-select-option *ngFor="let cus of customer" [value]="cus.CustomerID">
+                            {{ cus.CustomerName }}</ion-select-option>
+                        </ion-select>
+                        <ion-select *ngIf="type == 'new'; else new" #new class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'customer')">
+                          <ion-select-option *ngFor="let cus of customer" [value]="cus.CustomerID">
+                            {{ cus.CustomerName }}</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                  <div class="col-4">
+                    <ion-list>
+                      <ion-item *ngIf="type == 'edit'; else edit" #edit>
+                        <ion-label color="primary" class="col-5" style="padding: 0px;">เลขที่ใบสั่งซื้อ</ion-label>
+                        <ion-input class="col-7" style="padding: 0px;"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">เวลา</ion-label>
+                        <ion-input class="col-7" style="padding: 0px;"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">แผนก</ion-label>
+                        <ion-select *ngIf="type == 'edit'; else edit" #edit class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'department')">
+                          <ion-select-option *ngFor="let dp of department" [value]="dp.SystemID">{{ dp.SystemName1 }}
+                          </ion-select-option>
+                        </ion-select>
+                        <ion-select *ngIf="type == 'new'; else new" #new class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'department')">
+                          <ion-select-option *ngFor="let dp of department" [value]="dp.SystemID">{{ dp.SystemName1 }}
+                          </ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">ผู้ขาย</ion-label>
+                        <ion-select *ngIf="type == 'edit'; else edit" #edit class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'vender')" [(ngModel)]="item.VenderID">
+                          <ion-select-option *ngFor="let vd of vender" [value]="vd.VenderID">{{ vd.VenderName }}
+                          </ion-select-option>
+                        </ion-select>
+                        <ion-select *ngIf="type == 'new'; else new" #new class="col-7" style="margin: 0px;"
+                          interface="popover" (ionChange)="onChange($event,'vender')">
+                          <ion-select-option *ngFor="let vd of vender" [value]="vd.VenderID">{{ vd.VenderName }}
+                          </ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                  <div class="col-4">
+                    <ion-list>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">คลังสินค้า</ion-label>
+                        <ion-select class="col-7" style="margin: 0px;" interface="popover"
+                          (ionChange)="onChange($event,'warehouse')">
+                          <ion-select-option *ngFor="let wh of warehourse" [value]="wh.SystemID">{{ wh.SystemName1 }}
+                          </ion-select-option>
+                        </ion-select>
+                        <ion-select class="col-7" style="margin: 0px;" interface="popover"
+                          (ionChange)="onChange($event,'warehouse')">
+                          <ion-select-option *ngFor="let wh of warehourse" [value]="wh.SystemID">{{ wh.SystemName1 }}
+                          </ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">เลขที่ Lot คลัง</ion-label>
+                        <ion-input class="col-7" style="padding: 0px;"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">เอกสารอ้างอิง 1</ion-label>
+                        <ion-input class="col-7" style="padding: 0px;"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label class="col-5" style="padding: 0px;" color="primary">หมายเหตุ</ion-label>
+                        <ion-input class="col-7" style="padding: 0px;"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-12" style="padding:5px;">
+        <div class="page-content-inner">
+          <div class="row" style="padding:5px;">
+            <div class="col-12 col-md-12" style="padding: 5px;">
+              <div class="portlet box blue">
+                <div class="portlet-title">
+                  <div class="caption">
+                    <i class="fa fa-cube" style="font-size: 1em;"></i>รายการรับสินค้าเข้า</div>
+                  <!-- <div class="tools">
+                  <span class="label label-sm label-info circle" (click)="Edit()"> แก้ไข </span>
+                </div> -->
+                </div>
+                <div class="portlet-body" style="padding: 2px;">
+                  <div class="tab-content">
+                    <div class="tab-pane active">
+                      <div class="row">
+                        <div class="col-3">
+                          <ion-list style="background-color: white;">
+                            <!-- <ion-item class="item" *ngFor="let item of data" (click)="onChange(item)">
+                              <ion-label>{{item.name}}</ion-label>
+                            </ion-item> -->
+                            <ion-item class="item">
+                              <ion-label (click)="onChangePage('product')">รายการสินค้า</ion-label>
+                            </ion-item>
+                            <ion-item class="item">
+                              <ion-label (click)="onChangePage('serial')">รายการ Serial Number</ion-label>
+                            </ion-item>
+                          </ion-list>
+                        </div>
+                        <div class="col-9" *ngIf="page == 1; else product" #product>
+                          <div class="pull-right" style="padding: 10px;">
+                            <span class="label label-sm label-success circle" (click)="addList()">เพิ่มรายการ</span>
+                          </div>
+                          <div class="table-scrollable">
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th> รหัส SKU </th>
+                                  <th> ชื่อรายการ </th>
+                                  <th> Lot/Batch </th>
+                                  <th> รับเข้า </th>
+                                  <th> หน่วย </th>
+                                  <th> สถานะ </th>
+                                  <th> วันหมดอายุ </th>
+                                  <th> หมายเหตุ </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of list; let i = index">
+                                  <td style="padding-top:15px;"> {{item.SKUCode}} </td>
+                                  <td style="padding-top:15px;"> {{item.Name}} </td>
+
+
+                                  <td style="padding-top:15px;"></td>
+                                  <td style="padding-top:15px;"> <input type="number" [(ngModel)]="item.Qty"> </td>
+                                  <td>
+                                    <ion-select [(ngModel)]="Unit">
+                                      <ion-select-option [value]="Unit">Pcs</ion-select-option>
+                                    </ion-select>
+                                  </td>
+                                  <td>
+                                    <ion-select interface="popover">
+                                      <ion-select-option>WA</ion-select-option>
+                                    </ion-select>
+                                  </td>
+                                  <td style="padding-top:15px;">
+                                    <ion-datetime displayFormat="D/M/YYYY" pickerFormat="D/M/YYYY"
+                                      [(ngModel)]="item.ExpDate">
+                                    </ion-datetime>
+                                  </td>
+                                  <td style="padding-top:15px;"> </td>
+                                  <td (click)="remove(i);">
+                                    <span class="label label-sm label-danger circle">ลบ</span>
+                                  </td>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="col-9" *ngIf="page == 2; else serial" #serial>
+                          <div style="padding: 10px;">
+                            <ion-item no-line>
+                              <ion-label class="col-5" style="padding: 0px;" color="primary">Serial No :</ion-label>
+                              <ion-input></ion-input>
+                              <ion-icon name="barcode" (click)="addListserial()"></ion-icon>
+                              <ion-icon name="search" (click)="searchListserial()"></ion-icon>
+                            </ion-item>
+                          </div>
+                          <div class="table-scrollable">
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th> รหัส SKU </th>
+                                  <th> ชื่อรายการ </th>
+                                  <th> Lot/Batch </th>
+                                  <th> รับเข้า </th>
+                                  <th> หน่วย </th>
+                                  <th> สถานะ </th>
+                                  <th> วันหมดอายุ </th>
+                                  <th> หมายเหตุ </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of list; let i = index">
+                                  <td style="padding-top:15px;"> {{item.SKUCode}} </td>
+                                  <td style="padding-top:15px;"> {{item.Name}} </td>
+
+
+                                  <td style="padding-top:15px;"></td>
+                                  <td style="padding-top:15px;"> <input type="number" [(ngModel)]="item.Qty"> </td>
+                                  <td>
+                                    <ion-select [(ngModel)]="Unit">
+                                      <ion-select-option [value]="Unit">Pcs</ion-select-option>
+                                    </ion-select>
+                                  </td>
+                                  <td>
+                                    <ion-select interface="popover">
+                                      <ion-select-option>WA</ion-select-option>
+                                    </ion-select>
+                                  </td>
+                                  <td style="padding-top:15px;">
+                                    <ion-datetime displayFormat="D/M/YYYY" pickerFormat="D/M/YYYY"
+                                      [(ngModel)]="item.ExpDate">
+                                    </ion-datetime>
+                                  </td>
+                                  <td style="padding-top:15px;"> </td>
+                                  <td (click)="remove(i);">
+                                    <span class="label label-sm label-danger circle">ลบ</span>
+                                  </td>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

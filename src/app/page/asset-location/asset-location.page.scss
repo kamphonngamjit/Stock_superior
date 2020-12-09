@@ -1,0 +1,18 @@
+ion-select{
+    --ion-background-color: white;
+    max-width: 100% !important;
+}
+ion-select-option{
+    --ion-background-color: white;
+    max-width: 100% !important;
+}
+ion-content {
+    --ion-background-color: white;
+}
+  ion-popover .popover-wrapper .popover-content {
+    background-color: white;
+    width: auto!important;
+    left: 0px;
+    max-width: 500px;
+  }
+  
